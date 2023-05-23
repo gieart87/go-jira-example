@@ -42,7 +42,7 @@ var sprint string
 
 func main() {
 
-	fmt.Println("Enter project code (PRIS - PrivySign, PRIV - PrivyCorp, PL - PrivyNOW): ")
+	fmt.Println("Enter project code: ")
 	fmt.Scanln(&projectCode)
 
 	fmt.Println("Enter email address: ")
@@ -88,12 +88,12 @@ func getTickets(projectCode string) {
 		stringPoint, _ := strconv.Atoi(fmt.Sprintf("%v", storyPoint))
 		totalPoint += stringPoint
 
-		issueURL := fmt.Sprintf("https://privyid.atlassian.net/browse/%v", issue.Key)
+		issueURL := fmt.Sprintf(os.Getenv("JIRA_URL")+"browse/%v (%v)", issue.Key, storyPoint)
 
-		issueDetail := fmt.Sprintf("%v, Point: %v", issueURL, storyPoint)
+		issueDetail := fmt.Sprintf("%v", issueURL)
 
 		fmt.Println(issueDetail)
 	}
 
-	fmt.Println("Total Story Point: ", totalPoint)
+	fmt.Printf("Total Tickets: %v, Total Story Points: %v ", len(issues), totalPoint)
 }
